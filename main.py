@@ -8,7 +8,6 @@ from fastapi.encoders import jsonable_encoder
 
 app = FastAPI(title="AI Application Developer Intern Assessment API")
 
-# Instantiate DataIngestion with updated paths
 ingestion = DataIngestion(
     json_path="datasets/dataset1.json",
     csv_path="datasets/dataset2.csv",
@@ -26,7 +25,6 @@ except Exception as e:
 pdf_data = ingestion.load_pdf()
 pptx_data = ingestion.load_pptx()
 
-# Process and merge JSON & CSV data
 processor = DataProcessor(json_data, csv_df, pdf_data, pptx_data)
 unified = processor.merge_all_data()
 

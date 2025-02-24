@@ -70,14 +70,12 @@ class DataProcessor:
         # Convert the 'date' column to datetime then extract the date portion.
         df["date"] = pd.to_datetime(df["date"]).dt.date
 
-        # Extract year and quarter from the Python date objects using apply.
+        # Extract year and quarter from the Python date objects.
         df["year"] = df["date"].apply(lambda d: d.year)
         df["quarter"] = df["date"].apply(lambda d: f"Q{((d.month - 1) // 3) + 1}")
 
-        # Process revenue: assuming the header is "revenue"
+        # Process revenue
         if "revenue" in df.columns:
-            # Since the revenue is already numeric in your CSV, no cleaning might be necessary.
-            # If needed, you can convert it explicitly.
             df["revenue"] = pd.to_numeric(df["revenue"], errors="coerce")
         else:
             df["revenue"] = None
@@ -97,11 +95,8 @@ class DataProcessor:
         df = pd.DataFrame(self.pdf_data)
         # Standardize column names.
         df.columns = [col.strip() for col in df.columns]
-        # Convert Year to int.
         df["Year"] = df["Year"].astype(int)
-        # Convert Revenue (in $) by removing commas and converting to float.
         df["Revenue (in $)"] = df["Revenue (in $)"].str.replace(",", "", regex=False).astype(float)
-        # Optionally, convert Memberships Sold and Avg Duration (Minutes) to numeric.
         df["Memberships Sold"] = pd.to_numeric(df["Memberships Sold"], errors="coerce")
         df["Avg Duration (Minutes)"] = pd.to_numeric(df["Avg Duration (Minutes)"], errors="coerce")
         return df
@@ -111,7 +106,6 @@ class DataProcessor:
         Processes the PPTX data which is already structured as a composite dictionary.
         Optionally converts revenue strings to numeric in quarterly_metrics.
         """
-        # If pptx_data contains the key "data", use it; otherwise, use pptx_data directly.
         if isinstance(self.pptx_data, dict) and "data" in self.pptx_data:
             pptx = self.pptx_data["data"]
         else:
@@ -140,7 +134,6 @@ class DataProcessor:
         aggregated_performance = self.process_aggregated_report()
         presentation = self.process_pptx_data()
 
-        # For company performance, we already have JSON-based performance.
         company_performance = json_data["performance"]
 
         return {
