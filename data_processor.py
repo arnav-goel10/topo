@@ -58,31 +58,34 @@ class DataProcessor:
 
     def process_membership_data(self) -> pd.DataFrame:
         """
-        Processes the detailed membership activity from CSV.
-        Converts the 'date' column to datetime and extracts year and quarter.
+        Processes detailed membership activity from CSV.
+        Converts the 'date' column to a Python date object, then extracts year and quarter
+        using standard Python methods.
         """
         df = self.csv_df.copy()
-        # Standardize column names.
-        df.columns = [col.strip() for col in df.columns]
-        df["date"] = pd.to_datetime(df["date"])
-        df["year"] = df["date"].dt.year
-        df["quarter"] = df["date"].dt.quarter.map(lambda x: f"Q{x}")
-        # Ensure revenue is numeric.
+
+        # Standardize column names to lowercase.
+        df.columns = [col.strip().lower() for col in df.columns]
+
+        # Convert the 'date' column to datetime then extract the date portion.
+        df["date"] = pd.to_datetime(df["date"]).dt.date
+
+        # Extract year and quarter from the Python date objects using apply.
+        df["year"] = df["date"].apply(lambda d: d.year)
+        df["quarter"] = df["date"].apply(lambda d: f"Q{((d.month - 1) // 3) + 1}")
+
+        # Process revenue: assuming the header is "revenue"
         if "revenue" in df.columns:
-            # If revenue is an object (string), clean it; otherwise, use as-is.
-            if df["revenue"].dtype == object:
-                df["revenue"] = pd.to_numeric(
-                    df["revenue"].astype(str).str.replace(r"[\$,]", "", regex=True).str.strip(),
-                    errors="coerce"
-                )
-            # Else, it’s already numeric.
+            # Since the revenue is already numeric in your CSV, no cleaning might be necessary.
+            # If needed, you can convert it explicitly.
+            df["revenue"] = pd.to_numeric(df["revenue"], errors="coerce")
         else:
             df["revenue"] = None
-        # Return all expected columns: date, membership_id, membership_type, activity, revenue,
-        # duration (minutes), location, year, quarter.
-        expected_cols = ["date", "membership_id", "membership_type", "activity",
-                         "revenue", "duration (minutes)", "location", "year", "quarter"]
-        # It is assumed the CSV contains these columns.
+
+        expected_cols = [
+            "date", "membership_id", "membership_type", "activity",
+            "revenue", "duration (minutes)", "location", "year", "quarter"
+        ]
         return df[expected_cols]
 
     def process_aggregated_report(self) -> pd.DataFrame:
