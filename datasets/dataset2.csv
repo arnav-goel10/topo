@@ -1,0 +1,101 @@
+Date,Membership_ID,Membership_Type,Activity,Revenue,Duration (Minutes),Location
+2024-01-21,M001,Basic,Gym,113.82,60,Downtown
+2024-01-05,M002,VIP,Pool,104.74,30,Eastside
+2024-01-14,M003,Basic,Gym,23.12,60,Eastside
+2024-01-20,M004,Basic,Personal Training,110.24,120,Downtown
+2024-01-15,M005,VIP,Dance Class,123.32,30,Downtown
+2024-01-23,M006,Premium,Swimming Class,48.9,60,Westside
+2024-01-04,M007,Basic,Yoga Class,23.54,90,Eastside
+2024-01-09,M008,Basic,Climbing Wall,85.07,120,Downtown
+2024-01-18,M009,Premium,Swimming Class,90.83,30,Downtown
+2024-01-22,M010,Basic,Dance Class,147.93,60,Downtown
+2024-01-13,M011,Premium,Climbing Wall,99.0,90,Downtown
+2024-01-12,M012,Premium,Personal Training,103.82,30,Eastside
+2024-01-21,M013,Basic,Personal Training,32.88,120,Westside
+2024-01-30,M014,VIP,Personal Training,105.85,30,Downtown
+2024-01-27,M015,Basic,Swimming Class,66.16,30,Downtown
+2024-01-30,M016,VIP,Swimming Class,39.77,120,Westside
+2024-01-29,M017,VIP,Climbing Wall,30.0,60,Downtown
+2024-01-24,M018,VIP,Dance Class,114.58,120,Eastside
+2024-01-13,M019,Premium,Personal Training,149.63,60,Eastside
+2024-01-16,M020,Basic,Gym,130.55,60,Eastside
+2024-01-06,M021,VIP,Yoga Class,93.5,120,Westside
+2024-01-20,M022,Premium,Dance Class,145.95,30,Eastside
+2024-01-24,M023,Basic,Dance Class,117.6,90,Downtown
+2024-01-10,M024,Premium,Tennis Court,73.52,90,Eastside
+2024-01-25,M025,Basic,Pool,131.87,90,Eastside
+2024-01-17,M026,VIP,Personal Training,31.4,60,Eastside
+2024-01-31,M027,VIP,Gym,93.85,120,Downtown
+2024-01-04,M028,Premium,Dance Class,43.52,60,Eastside
+2024-01-31,M029,Basic,Pool,112.47,30,Eastside
+2024-01-25,M030,Basic,Tennis Court,102.37,60,Westside
+2024-01-17,M031,VIP,Yoga Class,145.01,60,Eastside
+2024-01-10,M032,Premium,Swimming Class,71.33,120,Downtown
+2024-01-08,M033,Basic,Pool,57.33,60,Eastside
+2024-01-08,M034,Basic,Pool,109.1,30,Downtown
+2024-01-03,M035,Basic,Swimming Class,19.92,60,Westside
+2024-01-22,M036,Premium,Personal Training,85.49,120,Downtown
+2024-01-26,M037,Premium,Yoga Class,36.66,30,Eastside
+2024-01-14,M038,Premium,Yoga Class,67.55,30,Eastside
+2024-01-21,M039,VIP,Pool,18.49,90,Downtown
+2024-01-08,M040,Basic,Personal Training,85.08,60,Westside
+2024-01-06,M041,Premium,Climbing Wall,44.97,30,Westside
+2024-01-26,M042,VIP,Pool,17.08,30,Downtown
+2024-01-30,M043,Basic,Tennis Court,66.9,120,Downtown
+2024-01-28,M044,Premium,Gym,33.05,30,Westside
+2024-01-09,M045,Premium,Dance Class,69.22,120,Downtown
+2024-01-07,M046,Premium,Personal Training,145.62,30,Eastside
+2024-01-11,M047,Basic,Gym,91.78,60,Downtown
+2024-01-31,M048,VIP,Pool,129.19,30,Eastside
+2024-01-03,M049,VIP,Personal Training,66.53,60,Eastside
+2024-01-20,M050,Basic,Pool,68.69,90,Westside
+2024-01-07,M051,VIP,Swimming Class,43.42,120,Downtown
+2024-01-22,M052,VIP,Dance Class,74.01,30,Downtown
+2024-01-15,M053,VIP,Pool,20.26,60,Eastside
+2024-01-09,M054,Basic,Swimming Class,133.32,60,Westside
+2024-01-10,M055,Basic,Climbing Wall,126.72,90,Eastside
+2024-01-26,M056,VIP,Gym,103.5,90,Eastside
+2024-01-04,M057,Basic,Dance Class,26.16,30,Eastside
+2024-01-18,M058,Basic,Dance Class,49.45,60,Eastside
+2024-01-11,M059,Basic,Dance Class,80.76,90,Downtown
+2024-01-03,M060,VIP,Yoga Class,126.11,30,Downtown
+2024-01-11,M061,Basic,Dance Class,32.62,120,Eastside
+2024-01-23,M062,Premium,Gym,25.66,60,Eastside
+2024-01-02,M063,Premium,Tennis Court,70.17,30,Westside
+2024-01-12,M064,Basic,Swimming Class,39.41,60,Eastside
+2024-01-04,M065,Premium,Yoga Class,146.34,60,Downtown
+2024-01-28,M066,Basic,Tennis Court,133.4,30,Downtown
+2024-01-24,M067,Premium,Yoga Class,122.31,60,Westside
+2024-01-06,M068,VIP,Pool,63.56,30,Westside
+2024-01-08,M069,Basic,Climbing Wall,58.95,60,Downtown
+2024-01-01,M070,VIP,Personal Training,65.79,90,Downtown
+2024-01-31,M071,Premium,Swimming Class,99.81,120,Eastside
+2024-01-27,M072,VIP,Swimming Class,141.49,30,Westside
+2024-01-06,M073,VIP,Dance Class,15.36,120,Westside
+2024-01-24,M074,Premium,Yoga Class,94.87,30,Westside
+2024-01-29,M075,VIP,Personal Training,45.66,120,Downtown
+2024-01-17,M076,VIP,Personal Training,60.99,30,Eastside
+2024-01-30,M077,Premium,Swimming Class,102.87,30,Eastside
+2024-01-29,M078,Premium,Dance Class,103.37,90,Westside
+2024-01-23,M079,Premium,Tennis Court,36.86,120,Eastside
+2024-01-24,M080,Basic,Dance Class,66.85,30,Westside
+2024-01-10,M081,Basic,Yoga Class,120.01,90,Westside
+2024-01-15,M082,Premium,Personal Training,81.56,60,Eastside
+2024-01-03,M083,Premium,Swimming Class,23.07,60,Eastside
+2024-01-10,M084,Basic,Personal Training,30.63,30,Downtown
+2024-01-16,M085,VIP,Pool,73.76,60,Eastside
+2024-01-23,M086,Premium,Climbing Wall,65.95,60,Eastside
+2024-01-23,M087,Basic,Pool,118.98,60,Downtown
+2024-01-26,M088,VIP,Climbing Wall,17.03,60,Downtown
+2024-01-15,M089,Basic,Climbing Wall,103.46,90,Westside
+2024-01-20,M090,VIP,Yoga Class,126.28,120,Downtown
+2024-01-24,M091,Premium,Climbing Wall,46.29,60,Eastside
+2024-01-09,M092,VIP,Climbing Wall,97.74,90,Westside
+2024-01-03,M093,VIP,Dance Class,42.83,90,Westside
+2024-01-29,M094,VIP,Pool,29.37,60,Westside
+2024-01-23,M095,Basic,Personal Training,18.99,120,Westside
+2024-01-18,M096,Premium,Yoga Class,18.72,120,Westside
+2024-01-29,M097,VIP,Gym,129.94,120,Westside
+2024-01-01,M098,Premium,Dance Class,115.49,120,Eastside
+2024-01-24,M099,VIP,Personal Training,78.35,90,Westside
+2024-01-16,M100,Basic,Yoga Class,57.06,120,Eastside

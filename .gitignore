@@ -1,0 +1,9 @@
+# Ignore JetBrains IDE settings
+.idea/
+
+# Ignore Python bytecode
+__pycache__/
+
+# Other potential files to ignore
+*.log
+*.env

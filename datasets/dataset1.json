@@ -1,0 +1,250 @@
+{
+    "companies": [
+        {
+            "id": 1,
+            "name": "FitPro",
+            "industry": "Sports and Leisure",
+            "revenue": 95000000,
+            "location": "North America",
+            "employees": [
+                {
+                    "id": "E001",
+                    "name": "Alice",
+                    "role": "Personal Trainer",
+                    "cashmoneh": 45000,
+                    "hired_date": "2020-01-15"
+                },
+                {
+                    "id": "E002",
+                    "name": "Bob",
+                    "role": "Group Fitness Instructor",
+                    "cashmoneh": 40000,
+                    "hired_date": "2019-06-22"
+                },
+                {
+                    "id": "E003",
+                    "name": "Eve",
+                    "role": "Gym Manager",
+                    "cashmoneh": 70000,
+                    "hired_date": "2021-03-12"
+                },
+                {
+                    "id": "E004",
+                    "name": "Frank",
+                    "role": "Sports Nutritionist",
+                    "cashmoneh": 60000,
+                    "hired_date": "2022-07-08"
+                },
+                {
+                    "id": "E005",
+                    "name": "Grace",
+                    "role": "Marketing Specialist",
+                    "cashmoneh": 50000,
+                    "hired_date": "2020-12-01"
+                },
+                {
+                    "id": "E006",
+                    "name": "Hank",
+                    "role": "Customer Service Lead",
+                    "cashmoneh": 42000,
+                    "hired_date": "2018-11-15"
+                },
+                {
+                    "id": "E007",
+                    "name": "Isla",
+                    "role": "Event Coordinator",
+                    "cashmoneh": 48000,
+                    "hired_date": "2021-06-10"
+                },
+                {
+                    "id": "E008",
+                    "name": "Jake",
+                    "role": "Equipment Maintenance Technician",
+                    "cashmoneh": 40000,
+                    "hired_date": null
+                },
+                {
+                    "id": "E009",
+                    "name": "Karen",
+                    "role": "Swimming Coach",
+                    "cashmoneh": 47000,
+                    "hired_date": "2019-09-18"
+                },
+                {
+                    "id": "E010",
+                    "name": "Leo",
+                    "role": "Yoga Instructor",
+                    "cashmoneh": 42000,
+                    "hired_date": "2020-05-22"
+                },
+                {
+                    "id": "E011",
+                    "name": "Maya",
+                    "role": "Receptionist",
+                    "cashmoneh": 30000,
+                    "hired_date": "2021-11-03"
+                },
+                {
+                    "id": "E012",
+                    "name": "Noah",
+                    "role": "Aquatics Director",
+                    "cashmoneh": 60000,
+                    "hired_date": "2019-03-27"
+                },
+                {
+                    "id": "E013",
+                    "name": "Olivia",
+                    "role": "Fitness Consultant",
+                    "cashmoneh": 52000,
+                    "hired_date": "2022-01-17"
+                },
+                {
+                    "id": "E014",
+                    "name": "Peter",
+                    "role": "Tennis Coach",
+                    "cashmoneh": 55000,
+                    "hired_date": "2017-08-30"
+                },
+                {
+                    "id": "E015",
+                    "name": "Quinn",
+                    "role": "Corporate Wellness Coordinator",
+                    "cashmoneh": 62000,
+                    "hired_date": "2023-02-01"
+                }
+            ],
+            "performance": {
+                "2023_Q1": {
+                    "revenue": 23000000,
+                    "profit_margin": 12.5
+                },
+                "2023_Q2": {
+                    "revenue": 25000000,
+                    "profit_margin": 13.0
+                }
+            }
+        },
+        {
+            "id": 2,
+            "name": "RecreaLife",
+            "industry": "Sports and Leisure",
+            "revenue": null,
+            "location": "Europe",
+            "employees": [
+                {
+                    "id": "E101",
+                    "name": "Carol",
+                    "role": "Spa Therapist",
+                    "cashmoneh": 35000
+                },
+                {
+                    "id": "E102",
+                    "name": "Dave",
+                    "role": "Physiotherapist",
+                    "cashmoneh": 60000
+                },
+                {
+                    "id": "E103",
+                    "name": "Emma",
+                    "role": "Wellness Coach",
+                    "cashmoneh": 45000,
+                    "hired_date": "2020-05-13"
+                },
+                {
+                    "id": "E104",
+                    "name": "Fiona",
+                    "role": "Sports Therapist",
+                    "cashmoneh": 55000,
+                    "hired_date": null
+                },
+                {
+                    "id": "E105",
+                    "name": "George",
+                    "role": "Massage Therapist",
+                    "cashmoneh": 40000,
+                    "hired_date": "2021-04-22"
+                },
+                {
+                    "id": "E106",
+                    "name": "Holly",
+                    "role": "Front Desk Manager",
+                    "cashmoneh": 38000,
+                    "hired_date": "2019-10-03"
+                },
+                {
+                    "id": "E107",
+                    "name": "Ian",
+                    "role": "Lifeguard",
+                    "cashmoneh": 32000,
+                    "hired_date": "2018-07-20"
+                },
+                {
+                    "id": "E108",
+                    "name": "Julia",
+                    "role": "Dance Instructor",
+                    "cashmoneh": 42000,
+                    "hired_date": "2020-09-14"
+                },
+                {
+                    "id": "E109",
+                    "name": "Kyle",
+                    "role": "Climbing Instructor",
+                    "cashmoneh": 45000,
+                    "hired_date": "2015-11-10"
+                },
+                {
+                    "id": "E110",
+                    "name": "Lila",
+                    "role": "Pilates Instructor",
+                    "cashmoneh": 46000,
+                    "hired_date": "2017-01-25"
+                },
+                {
+                    "id": "E111",
+                    "name": "Milo",
+                    "role": "Recreation Manager",
+                    "cashmoneh": 58000,
+                    "hired_date": "2022-06-02"
+                },
+                {
+                    "id": "E112",
+                    "name": "Nora",
+                    "role": "Aquatic Exercise Instructor",
+                    "cashmoneh": 48000,
+                    "hired_date": "2020-02-15"
+                },
+                {
+                    "id": "E113",
+                    "name": "Oscar",
+                    "role": "Outdoor Adventure Guide",
+                    "cashmoneh": 53000,
+                    "hired_date": "2021-03-09"
+                },
+                {
+                    "id": "E114",
+                    "name": "Paula",
+                    "role": "Membership Coordinator",
+                    "cashmoneh": 36000,
+                    "hired_date": "2019-12-19"
+                },
+                {
+                    "id": "E115",
+                    "name": "Quincy",
+                    "role": "Wellness Retreat Planner",
+                    "cashmoneh": 70000,
+                    "hired_date": "2023-04-15"
+                }
+            ],
+            "performance": {
+                "2023_Q1": {
+                    "revenue": null,
+                    "profit_margin": 10.0
+                },
+                "2023_Q2": {
+                    "revenue": 22000000,
+                    "profit_margin": 11.5
+                }
+            }
+        }
+    ]
+}
