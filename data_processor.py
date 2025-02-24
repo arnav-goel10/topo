@@ -68,10 +68,14 @@ class DataProcessor:
         df["year"] = df["date"].dt.year
         df["quarter"] = df["date"].dt.quarter.map(lambda x: f"Q{x}")
         # Ensure revenue is numeric.
-        if "Revenue" in df.columns:
-            df["revenue"] = df["Revenue"].astype(float)
-        elif "Revenue (in $)" in df.columns:
-            df["revenue"] = df["Revenue (in $)"].str.replace(",", "", regex=False).astype(float)
+        if "revenue" in df.columns:
+            # If revenue is an object (string), clean it; otherwise, use as-is.
+            if df["revenue"].dtype == object:
+                df["revenue"] = pd.to_numeric(
+                    df["revenue"].astype(str).str.replace(r"[\$,]", "", regex=True).str.strip(),
+                    errors="coerce"
+                )
+            # Else, it’s already numeric.
         else:
             df["revenue"] = None
         # Return all expected columns: date, membership_id, membership_type, activity, revenue,
