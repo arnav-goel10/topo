@@ -6,7 +6,7 @@ from data_ingestion import DataIngestion
 from data_processor import DataProcessor
 from fastapi.encoders import jsonable_encoder
 
-app = FastAPI(title="Software Developer Intern Assessment API")
+app = FastAPI(title="AI Application Developer Intern Assessment API")
 
 # Instantiate DataIngestion with updated paths
 ingestion = DataIngestion(
