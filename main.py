@@ -30,31 +30,31 @@ pptx_data = ingestion.load_pptx()
 processor = DataProcessor(json_data, csv_df, pdf_data, pptx_data)
 unified = processor.merge_all_data()
 
+def convert_if_dataframe(item):
+    """
+    Converts a pandas DataFrame to a list of dictionaries,
+    replacing NaN/NA with None. If the item is not a DataFrame,
+    returns it unchanged.
+    """
+    if isinstance(item, pd.DataFrame):
+        return item.replace({pd.NA: None, np.nan: None}).to_dict(orient="records")
+    return item
 
 @app.get("/api/data")
 def get_all_data():
     """
-    Return the unified composite dataset, converting DataFrames to dicts
-    and ensuring NaN values become null.
+    Return the unified composite dataset in JSON format.
     """
-    # Convert DataFrames to dictionaries, replacing NaN and pd.NA with None.
-    if unified.get("company_info") is not None:
-        unified["company_info"] = unified["company_info"].replace({pd.NA: None, np.nan: None}).to_dict(orient="records")
-    if unified.get("employee_data") is not None:
-        unified["employee_data"] = unified["employee_data"].replace({pd.NA: None, np.nan: None}).to_dict(
-            orient="records")
-    if unified.get("company_performance") is not None:
-        unified["company_performance"] = unified["company_performance"].replace({pd.NA: None, np.nan: None}).to_dict(
-            orient="records")
-    if unified.get("membership_activity") is not None:
-        unified["membership_activity"] = unified["membership_activity"].replace({pd.NA: None, np.nan: None}).to_dict(
-            orient="records")
-    if unified.get("aggregated_performance") is not None:
-        unified["aggregated_performance"] = unified["aggregated_performance"].replace(
-            {pd.NA: None, np.nan: None}).to_dict(orient="records")
-
-    # Use jsonable_encoder to safely convert the unified data.
-    return {"data": jsonable_encoder(unified)}
+    # Create a new dictionary to hold the converted data.
+    data = {
+        "company_info": convert_if_dataframe(unified.get("company_info")),
+        "employee_data": convert_if_dataframe(unified.get("employee_data")),
+        "company_performance": convert_if_dataframe(unified.get("company_performance")),
+        "membership_activity": convert_if_dataframe(unified.get("membership_activity")),
+        "aggregated_performance": convert_if_dataframe(unified.get("aggregated_performance")),
+        "presentation": unified.get("presentation")  # Already a dict.
+    }
+    return {"data": jsonable_encoder(data)}
 
 @app.get("/api/data/pdf")
 def get_pdf_data():
