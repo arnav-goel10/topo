@@ -66,7 +66,7 @@ def get_pdf_data():
 @app.get("/api/data/pptx")
 def get_pptx_data():
     """
-    Return the parsed PPTX data, which includes summary metrics, quarterly metrics, revenue breakdown, and raw slide data.
+    Return the parsed PPTX data, which includes summary metrics, quarterly metrics, revenue breakdown.
     """
     return {"data": pptx_data}
 
@@ -80,7 +80,7 @@ def get_json_data():
 @app.get("/api/data/csv")
 def get_csv_data():
     """
-    Return the CSV data (if available), with NaN replaced by None.
+    Return the CSV data, with NaN replaced by None.
     """
     if csv_df is not None:
         return {"data": csv_df.replace({np.nan: None}).to_dict(orient="records")}
