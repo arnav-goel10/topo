@@ -1,82 +1,125 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="card">
-  <div class="card-header">
+  <div class="card-header bg-primary text-white">
     Company Performance (Revenue by Quarter)
   </div>
   <div class="card-body">
-    <canvas id="performanceChart" width="600" height="400"></canvas>
+    <!-- Toggle controls for chart type -->
+    <div class="mb-3">
+      <label class="form-label me-2">Chart Type:</label>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="chartType" id="barChart" value="bar" checked>
+        <label class="form-check-label" for="barChart">Bar</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="chartType" id="lineChart" value="line">
+        <label class="form-check-label" for="lineChart">Line</label>
+      </div>
+    </div>
+    <!-- Responsive canvas container with adjusted height -->
+    <div class="ratio ratio-16x9" id="chartContainer">
+      <canvas id="performanceChart"></canvas>
+    </div>
   </div>
 </div>
+
 <script>
-  fetch("/api/data")
-    .then(response => response.json())
-    .then(data => {
-      const performanceData = data.data.company_performance;
-      // Prepare labels and revenue values:
-      const labels = performanceData.map(item => item.quarter);
-      // If revenue is null, set it to 0 for drawing, but track missing flags.
-      const revenues = performanceData.map(item => item.revenue === null ? 0 : item.revenue);
-      const missingFlags = performanceData.map(item => item.revenue === null);
+  let performanceChart;
+  let missingFlags = [];
 
-      // Custom plugin to draw "Data Unavailable" on bars with missing data.
-      const missingDataPlugin = {
-        id: 'showMissingData',
-        afterDatasetsDraw: (chart, args, options) => {
-          const {ctx, chartArea: {top, bottom}, scales: {x, y}} = chart;
-          chart.getDatasetMeta(0).data.forEach((bar, index) => {
-            if (missingFlags[index]) {
-              ctx.save();
-              ctx.fillStyle = 'red';
-              ctx.font = 'bold 14px sans-serif';
-              // Calculate the center of the bar (adjust as needed)
-              const centerX = bar.x;
-              // Draw the text slightly above the bar
-              const centerY = bar.y - 10;
-              ctx.fillText("Data Unavailable", centerX - 50, centerY);
-              ctx.restore();
-            }
-          });
+  // Custom plugin to draw "Data Unavailable" text over bars (only for bar charts)
+  const missingDataPlugin = {
+    id: 'showMissingData',
+    afterDatasetsDraw: (chart, args, options) => {
+      const {ctx} = chart;
+      chart.getDatasetMeta(0).data.forEach((bar, index) => {
+        if (missingFlags[index]) {
+          ctx.save();
+          ctx.fillStyle = 'red';
+          ctx.font = 'bold 14px sans-serif';
+          // Draw text above the bar.
+          const centerX = bar.x;
+          const posY = bar.y - 5;
+          ctx.fillText("Data Unavailable", centerX - 50, posY);
+          ctx.restore();
         }
-      };
+      });
+    }
+  };
 
-      const ctx = document.getElementById("performanceChart").getContext("2d");
-      new Chart(ctx, {
-        type: 'bar',
-        data: {
-          labels: labels,
-          datasets: [{
-            label: 'Revenue',
-            data: revenues,
-            backgroundColor: revenues.map((value, idx) =>
-              missingFlags[idx] ? 'rgba(255, 99, 132, 0.5)' : 'rgba(75, 192, 192, 0.5)'
-            ),
-            borderColor: revenues.map((value, idx) =>
-              missingFlags[idx] ? 'rgba(255, 99, 132, 1)' : 'rgba(75, 192, 192, 1)'
-            ),
-            borderWidth: 1
-          }]
-        },
-        options: {
-          plugins: {
-            tooltip: {
-              callbacks: {
-                label: function(context) {
-                  if (missingFlags[context.dataIndex]) {
-                    return "Data Unavailable";
+  function createChart(chartType) {
+    fetch("/api/data")
+      .then(response => response.json())
+      .then(data => {
+        const performanceData = data.data.company_performance;
+        const labels = performanceData.map(item => item.quarter);
+        // Use 0 for null revenue, and record missing flags.
+        const revenues = performanceData.map(item => item.revenue === null ? 0 : item.revenue);
+        missingFlags = performanceData.map(item => item.revenue === null);
+
+        if (performanceChart) {
+          performanceChart.destroy();
+        }
+
+        const ctx = document.getElementById("performanceChart").getContext("2d");
+        performanceChart = new Chart(ctx, {
+          type: chartType,
+          data: {
+            labels: labels,
+            datasets: [{
+              label: 'Revenue',
+              data: revenues,
+              backgroundColor: revenues.map((value, idx) =>
+                missingFlags[idx] ? 'rgba(255, 99, 132, 0.5)' : 'rgba(75, 192, 192, 0.5)'
+              ),
+              borderColor: revenues.map((value, idx) =>
+                missingFlags[idx] ? 'rgba(255, 99, 132, 1)' : 'rgba(75, 192, 192, 1)'
+              ),
+              borderWidth: 1,
+              fill: chartType === 'line'
+            }]
+          },
+          options: {
+            plugins: {
+              tooltip: {
+                callbacks: {
+                  label: function(context) {
+                    if (missingFlags[context.dataIndex] && chartType === 'bar') {
+                      return "Data Unavailable";
+                    }
+                    return "Revenue: " + context.parsed.y;
                   }
-                  return "Revenue: " + context.parsed.y;
                 }
               }
-            }
+            },
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: { y: { beginAtZero: true } }
           },
-          scales: {
-            y: { beginAtZero: true }
-          }
-        },
-        plugins: [missingDataPlugin]
-      });
-    })
-    .catch(err => console.error("Error fetching data:", err));
+          // Only apply the missingDataPlugin for bar charts.
+          plugins: chartType === 'bar' ? [missingDataPlugin] : []
+        });
+      })
+      .catch(err => console.error("Error fetching data:", err));
+  }
+
+  function adjustChartContainerHeight() {
+    const navHeight = document.querySelector('.navbar').offsetHeight;
+    const newHeight = window.innerHeight - navHeight - 180;
+    document.getElementById('chartContainer').style.height = newHeight + 'px';
+  }
+
+  adjustChartContainerHeight();
+  window.addEventListener('resize', adjustChartContainerHeight);
+
+  // Initialize chart as a bar chart.
+  createChart("bar");
+
+  document.querySelectorAll('input[name="chartType"]').forEach(radio => {
+    radio.addEventListener("change", function() {
+      createChart(this.value);
+    });
+  });
 </script>
 {% endblock %}
