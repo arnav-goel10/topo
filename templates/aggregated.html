@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <div class="card-header">
+    Aggregated Quarterly Performance Report
+  </div>
+  <div class="card-body">
+    <table id="aggregatedTable" class="display">
+      <thead>
+        <tr>
+          <th>Year</th>
+          <th>Quarter</th>
+          <th>Revenue (in $)</th>
+          <th>Memberships Sold</th>
+          <th>Avg Duration (Minutes)</th>
+        </tr>
+      </thead>
+      <tbody id="aggregatedTableBody"></tbody>
+    </table>
+  </div>
+</div>
+<script>
+  fetch("/api/data")
+    .then(response => response.json())
+    .then(data => {
+      const aggregatedData = data.data.aggregated_performance;
+      const tbody = document.getElementById("aggregatedTableBody");
+      tbody.innerHTML = "";
+      aggregatedData.forEach(record => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${record.Year}</td>
+          <td>${record.Quarter}</td>
+          <td>${record["Revenue (in $)"]}</td>
+          <td>${record["Memberships Sold"]}</td>
+          <td>${record["Avg Duration (Minutes)"]}</td>
+        `;
+        tbody.appendChild(row);
+      });
+      $('#aggregatedTable').DataTable();
+    })
+    .catch(err => console.error("Error fetching aggregated data:", err));
+</script>
+{% endblock %}

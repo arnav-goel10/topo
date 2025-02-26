@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <div class="card-header">
+    Membership Activity
+  </div>
+  <div class="card-body">
+    <label for="membershipTypeFilter">Filter by Membership Type:</label>
+    <select id="membershipTypeFilter" class="form-select mb-3" style="width:200px;">
+      <option value="">All</option>
+      <option value="Basic">Basic</option>
+      <option value="Premium">Premium</option>
+      <option value="VIP">VIP</option>
+    </select>
+    <table id="membershipTable" class="display">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Membership ID</th>
+          <th>Type</th>
+          <th>Activity</th>
+          <th>Revenue</th>
+          <th>Duration (min)</th>
+          <th>Location</th>
+        </tr>
+      </thead>
+      <tbody id="membershipTableBody"></tbody>
+    </table>
+  </div>
+</div>
+<script>
+  fetch("/api/data")
+    .then(response => response.json())
+    .then(data => {
+      const membershipData = data.data.membership_activity;
+      const tbody = document.getElementById("membershipTableBody");
+      tbody.innerHTML = "";
+      membershipData.forEach(record => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${record.date ? record.date.split("T")[0] : ""}</td>
+          <td>${record.membership_id || ""}</td>
+          <td>${record.membership_type || ""}</td>
+          <td>${record.activity || ""}</td>
+          <td>${record.revenue !== null ? record.revenue : "Missing Data"}</td>
+          <td>${record["duration (minutes)"] || ""}</td>
+          <td>${record.location || ""}</td>
+        `;
+        tbody.appendChild(row);
+      });
+      // Initialize DataTables and custom filter
+      const membershipTable = $('#membershipTable').DataTable();
+      $('#membershipTypeFilter').on('change', function() {
+        const selected = $(this).val();
+        if (selected) {
+          membershipTable.column(2).search('^' + selected + '$', true, false).draw();
+        } else {
+          membershipTable.column(2).search('').draw();
+        }
+      });
+    })
+    .catch(err => console.error("Error fetching membership data:", err));
+</script>
+{% endblock %}

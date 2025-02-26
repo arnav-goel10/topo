@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card mb-4">
+  <div class="card-header">
+    Summary Metrics
+  </div>
+  <div class="card-body">
+    <div class="row">
+      {% for key, value in presentation.summary_metrics.items() %}
+      <div class="col-md-4">
+        <div class="border p-3 mb-3 rounded">
+          <h5 class="mb-1">{{ key }}</h5>
+          <p class="mb-0">{{ value }}</p>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<div class="card mb-4">
+  <div class="card-header">
+    Revenue Breakdown
+  </div>
+  <div class="card-body">
+    <ul class="list-group">
+      {% for activity, pct in presentation.revenue_breakdown.items() %}
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        {{ activity }}
+        <span class="badge bg-primary rounded-pill">{{ pct }}%</span>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header">
+    Quarterly Metrics
+  </div>
+  <div class="card-body">
+    <table class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th>Quarter</th>
+          <th>Revenue (in $)</th>
+          <th>Memberships Sold</th>
+          <th>Avg Duration (Minutes)</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for metric in presentation.quarterly_metrics %}
+        <tr>
+          <td>{{ metric.Quarter }}</td>
+          <td>{{ metric["Revenue (in $)"] }}</td>
+          <td>{{ metric["Memberships Sold"] }}</td>
+          <td>{{ metric["Avg Duration (Minutes)"] }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

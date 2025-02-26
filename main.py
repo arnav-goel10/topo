@@ -5,8 +5,15 @@ import numpy as np
 from data_ingestion import DataIngestion
 from data_processor import DataProcessor
 from fastapi.encoders import jsonable_encoder
+from fastapi import Request
+from fastapi.responses import HTMLResponse
+from fastapi.templating import Jinja2Templates
+
 
 app = FastAPI(title="AI Application Developer Intern Assessment API")
+
+templates = Jinja2Templates(directory="templates")
+
 
 ingestion = DataIngestion(
     json_path="datasets/dataset1.json",
@@ -37,6 +44,28 @@ def convert_if_dataframe(item):
     if isinstance(item, pd.DataFrame):
         return item.replace({pd.NA: None, np.nan: None}).to_dict(orient="records")
     return item
+
+@app.get("/performance", response_class=HTMLResponse)
+async def performance_page(request: Request):
+    return templates.TemplateResponse("performance.html", {"request": request})
+
+@app.get("/membership", response_class=HTMLResponse)
+async def membership_page(request: Request):
+    return templates.TemplateResponse("membership.html", {"request": request})
+
+@app.get("/aggregated", response_class=HTMLResponse)
+async def aggregated_page(request: Request):
+    return templates.TemplateResponse("aggregated.html", {"request": request})
+
+@app.get("/presentation", response_class=HTMLResponse)
+async def presentation_page(request: Request):
+    return templates.TemplateResponse("presentation.html", {"request": request, "presentation": unified.get("presentation")})
+
+@app.get("/", response_class=HTMLResponse)
+async def index(request: Request):
+    # Optionally, redirect to a default page; here we redirect to performance.
+    return templates.TemplateResponse("performance.html", {"request": request})
+
 
 @app.get("/api/data")
 def get_all_data():

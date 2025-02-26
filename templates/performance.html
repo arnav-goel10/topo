@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <div class="card-header">
+    Company Performance (Revenue by Quarter)
+  </div>
+  <div class="card-body">
+    <canvas id="performanceChart" width="600" height="400"></canvas>
+  </div>
+</div>
+<script>
+  fetch("/api/data")
+    .then(response => response.json())
+    .then(data => {
+      const performanceData = data.data.company_performance;
+      // Prepare labels and revenue values:
+      const labels = performanceData.map(item => item.quarter);
+      // If revenue is null, set it to 0 for drawing, but track missing flags.
+      const revenues = performanceData.map(item => item.revenue === null ? 0 : item.revenue);
+      const missingFlags = performanceData.map(item => item.revenue === null);
+
+      // Custom plugin to draw "Data Unavailable" on bars with missing data.
+      const missingDataPlugin = {
+        id: 'showMissingData',
+        afterDatasetsDraw: (chart, args, options) => {
+          const {ctx, chartArea: {top, bottom}, scales: {x, y}} = chart;
+          chart.getDatasetMeta(0).data.forEach((bar, index) => {
+            if (missingFlags[index]) {
+              ctx.save();
+              ctx.fillStyle = 'red';
+              ctx.font = 'bold 14px sans-serif';
+              // Calculate the center of the bar (adjust as needed)
+              const centerX = bar.x;
+              // Draw the text slightly above the bar
+              const centerY = bar.y - 10;
+              ctx.fillText("Data Unavailable", centerX - 50, centerY);
+              ctx.restore();
+            }
+          });
+        }
+      };
+
+      const ctx = document.getElementById("performanceChart").getContext("2d");
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'Revenue',
+            data: revenues,
+            backgroundColor: revenues.map((value, idx) =>
+              missingFlags[idx] ? 'rgba(255, 99, 132, 0.5)' : 'rgba(75, 192, 192, 0.5)'
+            ),
+            borderColor: revenues.map((value, idx) =>
+              missingFlags[idx] ? 'rgba(255, 99, 132, 1)' : 'rgba(75, 192, 192, 1)'
+            ),
+            borderWidth: 1
+          }]
+        },
+        options: {
+          plugins: {
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  if (missingFlags[context.dataIndex]) {
+                    return "Data Unavailable";
+                  }
+                  return "Revenue: " + context.parsed.y;
+                }
+              }
+            }
+          },
+          scales: {
+            y: { beginAtZero: true }
+          }
+        },
+        plugins: [missingDataPlugin]
+      });
+    })
+    .catch(err => console.error("Error fetching data:", err));
+</script>
+{% endblock %}

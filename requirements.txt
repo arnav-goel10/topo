@@ -6,4 +6,5 @@ uvicorn~=0.34.0
 matplotlib
 seaborn
 pytest
+jinja2
 numpy~=2.2.3
