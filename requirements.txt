@@ -3,8 +3,6 @@ pdfplumber~=0.11.5
 python-pptx~=1.0.2
 fastapi~=0.115.8
 uvicorn~=0.34.0
-matplotlib
-seaborn
 pytest
 jinja2
 numpy~=2.2.3
