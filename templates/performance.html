@@ -28,50 +28,41 @@
   let performanceChart;
   let missingFlags = {};
 
-  // Optional: Custom plugin placeholder (if you need extra functionality)
   const missingDataPlugin = {
     id: 'showMissingData'
-    // Plugin functionality can be added here if needed.
   };
 
   function createChart(chartType) {
     fetch("/api/data")
       .then(response => response.json())
       .then(data => {
-        // Expect company_performance data to be an array of objects with:
-        // company_id, quarter, revenue, profit_margin.
         const performanceData = data.data.company_performance;
 
-        // Get unique quarters (x-axis) and unique company IDs.
         const quarters = [...new Set(performanceData.map(item => item.quarter))];
         const companies = [...new Set(performanceData.map(item => item.company_id))];
 
-        // Define colors for each company. Extend if necessary.
         const colors = {
           1: { bg: 'rgba(75, 192, 192, 0.5)', border: 'rgba(75, 192, 192, 1)' },
           2: { bg: 'rgba(54, 162, 235, 0.5)', border: 'rgba(54, 162, 235, 1)' }
         };
 
-        // Build datasets and missingFlags.
         const datasets = companies.map(company => {
-          // For each quarter, get the revenue (or null if unavailable)
           const rawDataPoints = quarters.map(q => {
             const rec = performanceData.find(item => item.company_id === company && item.quarter === q);
             return rec ? rec.revenue : null;
           });
 
-          // Build missing flags: true if revenue is null (unavailable)
           missingFlags["Company " + company] = rawDataPoints.map(val => val === null);
 
           return {
             label: "Company " + company,
-            // Fixed legend color for consistency regardless of the first data point.
+
             legendColor: colors[company] ? colors[company].bg : 'rgba(0,0,0,0.5)',
-            // For display, show 0 when revenue is null so the chart still renders a bar/point.
+
             data: rawDataPoints.map(val => val === null ? 0 : val),
             backgroundColor: rawDataPoints.map(val => {
-              if (val === null) return 'rgba(255, 99, 132, 0.5)';   // Red for data unavailable
-              if (val === 0)    return 'rgba(255, 206, 86, 0.5)';    // Yellow for zero revenue
+              if (val === null) return 'rgba(255, 99, 132, 0.5)';
+              if (val === 0)    return 'rgba(255, 206, 86, 0.5)';
               return colors[company] ? colors[company].bg : 'rgba(0,0,0,0.5)';
             }),
             borderColor: rawDataPoints.map(val => {
@@ -98,7 +89,6 @@
             plugins: {
               legend: {
                 labels: {
-                  // Custom legend generator uses the fixed legendColor property.
                   generateLabels: function(chart) {
                     const datasets = chart.data.datasets;
                     return datasets.map((dataset, i) => ({
@@ -138,10 +128,10 @@
       .catch(err => console.error("Error fetching data:", err));
   }
 
-  // Adjust container height based on viewport size.
+
   function adjustChartContainerHeight() {
     const navHeight = document.querySelector('.navbar').offsetHeight;
-    // Adjust this offset if necessary to reduce scrolling.
+
     const newHeight = window.innerHeight - navHeight - 180;
     document.getElementById('chartContainer').style.height = newHeight + 'px';
   }
@@ -149,10 +139,8 @@
   adjustChartContainerHeight();
   window.addEventListener('resize', adjustChartContainerHeight);
 
-  // Initialize chart as a bar chart.
   createChart("bar");
 
-  // Add event listeners to toggle chart type.
   document.querySelectorAll('input[name="chartType"]').forEach(radio => {
     radio.addEventListener("change", function() {
       createChart(this.value);
